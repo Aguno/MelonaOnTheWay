@@ -27,7 +27,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    //MARK: Global Variables
+//MARK: Global Variables
     //Buttons
     Button west_dorm,west_gate,north_dorm,creative_building,humanities;
     Button sort_starting_point, sort_destinationi;
@@ -38,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
     String starting_humanities,starting_north_dorm, starting_west_dorm,starting_west_gate,starting_creative_building;
     String destination_humanities,destination_north_dorm,destination_west_dorm,destination_west_gate,destination_creative_building;
-    String uploaded_quest_pending,uploaded_quest_matched,accepted_quest;
+    String uploaded_quest,accepted_quest;
 
     //Boolean and int for sorting choice
     boolean start=true;
-    boolean matched = true;
     //get_type
     //0: normal, 1: uploaded quest list, 2: accepted quest list
     int get_type=0;
@@ -50,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
         //get Kaokao ID from Shared Preferences
         SharedPreferences prefs = getSharedPreferences("kakaoID",MODE_PRIVATE);
         kakaoID = prefs.getString("kakaoID",null);
@@ -77,32 +76,27 @@ public class MainActivity extends AppCompatActivity {
         add_request = (ImageButton) findViewById(R.id.add_request);
 
         //run Sort_starting_point on default\
-        new getQuest(true,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"서측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"서측",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
-
-        //Get profile info on default
-        new getQuest(true,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"북측기숙사",1,false).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"서측기숙사",2,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"서측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"서측",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
 
 
         sort_starting_point.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
-                new getQuest(true,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"서측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"서측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
 
             }
 
@@ -113,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 //Sort by destination
-                new getQuest(false,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"서측",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"서측",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
             }
         });
 
@@ -211,9 +205,6 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(intent);
                 //finish();
                 intent.putExtra("strJSON", destination_creative_building);
-                intent.putExtra("acceptedQuest",accepted_quest);
-                intent.putExtra("uploadedQuestPending",uploaded_quest_pending);
-                intent.putExtra("uploadedQuestMatched",uploaded_quest_matched);
                 startActivity(intent);
                 finish();
             }
@@ -225,10 +216,8 @@ public class MainActivity extends AppCompatActivity {
 
         String location_name = "";
 
-        public getQuest(boolean starting_point, String location,int get_type_input,boolean matched_input)
+        public getQuest(boolean starting_point, String location,int get_type)
         {
-            get_type = get_type_input;
-            matched = matched_input;
             if(starting_point){
                 start=  true;
                 location_name = location;
@@ -257,17 +246,10 @@ public class MainActivity extends AppCompatActivity {
                         urls[0] = urls[0] + "?" + location_string + "=" + location_name + "&state=1";
                     }
                     //uploaded quest request
-                    else if(get_type==1) {
-                        if (matched) {
-                            urls[0] = urls[0] + "?state=2&from=" + kakaoID;
-                        }
-                        else {
-                            urls[0] = urls[0] + "?state=1&from=" + kakaoID;
-                        }
-
-                        //accepted quest request
-                    }
-                    else if (get_type==2){
+                    else if(get_type==1){
+                        urls[0] = urls[0] + "?state=2&from="+kakaoID;
+                    //accepted quest request
+                    }else{
                         urls[0] = urls[0] + "?state=2&to="+kakaoID;
                     }
                     URL url = new URL(urls[0]);//url을 가져온다.
@@ -327,58 +309,41 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try{
-                if(get_type ==0) {
-                    if (start) {
-                        if (location_name == "북측기숙사") {
-                            starting_north_dorm = result;
-                            north_dorm.setText(Integer.toString(new JSONArray(starting_north_dorm).length()));
-                        } else if (location_name == "인사동") {
-                            starting_humanities = result;
-                            humanities.setText(Integer.toString(new JSONArray(starting_humanities).length()));
-                        } else if (location_name == "서측기숙사") {
-                            starting_west_dorm = result;
-                            west_dorm.setText(Integer.toString(new JSONArray(starting_west_dorm).length()));
-                        } else if (location_name == "쪽문") {
-                            starting_west_gate = result;
-                            west_gate.setText(Integer.toString(new JSONArray(starting_west_gate).length()));
-                        } else if (location_name == "창의관") {
-                            starting_creative_building = result;
-                            creative_building.setText(Integer.toString(new JSONArray(starting_creative_building).length()));
-                        }
-                    } else {
-                        if (location_name == "북측기숙사") {
-                            destination_north_dorm = result;
-                            north_dorm.setText(Integer.toString(new JSONArray(destination_north_dorm).length()));
-                        } else if (location_name == "인사동") {
-                            destination_humanities = result;
-                            humanities.setText(Integer.toString(new JSONArray(destination_humanities).length()));
-                        } else if (location_name == "서측기숙사") {
-                            destination_west_dorm = result;
-                            west_dorm.setText(Integer.toString(new JSONArray(destination_west_dorm).length()));
-                        } else if (location_name == "쪽문") {
-                            destination_west_gate = result;
-                            west_gate.setText(Integer.toString(new JSONArray(destination_west_gate).length()));
-                        } else if (location_name == "창의관") {
-                            destination_creative_building = result;
-                            creative_building.setText(Integer.toString(new JSONArray(destination_creative_building).length()));
-                        }
+                if(start) {
+                    if (location_name == "북측기숙사") {
+                        starting_north_dorm = result;
+                        north_dorm.setText(Integer.toString(new JSONArray(starting_north_dorm).length()));
+                    } else if (location_name == "인사동") {
+                        starting_humanities = result;
+                        humanities.setText(Integer.toString(new JSONArray(starting_humanities).length()));
+                    } else if (location_name == "서측기숙사") {
+                        starting_west_dorm = result;
+                        west_dorm.setText(Integer.toString(new JSONArray(starting_west_dorm).length()));
+                    } else if (location_name == "쪽문") {
+                        starting_west_gate = result;
+                        west_gate.setText(Integer.toString(new JSONArray(starting_west_gate).length()));
+                    } else if (location_name == "창의관") {
+                        starting_creative_building = result;
+                        creative_building.setText(Integer.toString(new JSONArray(starting_creative_building).length()));
                     }
                 }
-                else if(get_type==1){
-                    if(matched){
-                        uploaded_quest_matched = result;
-                        Log.d("Check main activity for quest get",uploaded_quest_matched);
+                else{
+                    if (location_name == "북측기숙사") {
+                        destination_north_dorm = result;
+                        north_dorm.setText(Integer.toString(new JSONArray(destination_north_dorm).length()));
+                    } else if (location_name == "인사동") {
+                        destination_humanities = result;
+                        humanities.setText(Integer.toString(new JSONArray(destination_humanities).length()));
+                    } else if (location_name == "서측기숙사") {
+                        destination_west_dorm = result;
+                        west_dorm.setText(Integer.toString(new JSONArray(destination_west_dorm).length()));
+                    } else if (location_name == "쪽문") {
+                        destination_west_gate = result;
+                        west_gate.setText(Integer.toString(new JSONArray(destination_west_gate).length()));
+                    } else if (location_name == "창의관") {
+                        destination_creative_building = result;
+                        creative_building.setText(Integer.toString(new JSONArray(destination_creative_building).length()));
                     }
-                    else
-                    {
-                        uploaded_quest_pending = result;
-                        Log.d("Check main activity for quest get",uploaded_quest_pending);
-                    }
-                }
-                else if(get_type ==2)
-                {
-                    accepted_quest = result;
-                    Log.d("Check main activity for quest get",accepted_quest);
                 }
                 Log.d("Check main activity for quest get",result);
             }
