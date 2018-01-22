@@ -63,7 +63,7 @@ public class MyPageDetail extends AppCompatActivity {
             public void onClick(View view) {
                 // Click action
                 builder = new AlertDialog.Builder(MyPageDetail.this);
-                View mView = getLayoutInflater().inflate(R.layout.are_you_sure,null);
+                View mView = getLayoutInflater().inflate(R.layout.withdraw_quest_alert,null);
                 Button yesButton = mView.findViewById(R.id.yes);
                 Button noButton = mView.findViewById(R.id.no);
                 builder.setView(mView);
@@ -72,7 +72,7 @@ public class MyPageDetail extends AppCompatActivity {
                 yesButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        new MyPageDetail.putQuest().execute("http://143.248.132.156:8080/api/accept");
+                        new MyPageDetail.putQuest().execute("http://143.248.132.156:8080/api/withdraw");
                         popup.cancel();
 
                     }
