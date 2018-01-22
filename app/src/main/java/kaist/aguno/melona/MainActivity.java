@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                         location_string = "destination";
                     }
 
-                    urls[0] = urls[0]+"?"+location_string+"="+location_name;
+                    urls[0] = urls[0]+"?"+location_string+"="+location_name+"&state=1";
                     URL url = new URL(urls[0]);//url을 가져온다.
                     con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("GET");
