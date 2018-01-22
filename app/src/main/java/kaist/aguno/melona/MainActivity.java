@@ -77,16 +77,16 @@ public class MainActivity extends AppCompatActivity {
         add_request = (ImageButton) findViewById(R.id.add_request);
 
         //run Sort_starting_point on default\
-        //new getQuest(true,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(true,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(true,"서측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(true,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(true,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(false,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(false,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(false,"서측",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(false,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"서측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"서측",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
 
         //Get profile info on default
         new getQuest(true,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
