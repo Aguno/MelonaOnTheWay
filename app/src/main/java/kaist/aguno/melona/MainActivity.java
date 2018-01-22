@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     String starting_humanities,starting_north_dorm, starting_west_dorm,starting_west_gate,starting_creative_building;
     String destination_humanities,destination_north_dorm,destination_west_dorm,destination_west_gate,destination_creative_building;
+    String uploaded_quest,accepted_quest;
 
     //Boolean and int for sorting choice
     boolean start=true;
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     //uploaded quest request
                     else if(get_type==1){
-                        urls[0] = urls[0] + "?state=2&to="+kakaoID;
+                        urls[0] = urls[0] + "?state=2&from="+kakaoID;
                     //accepted quest request
                     }else{
                         urls[0] = urls[0] + "?state=2&to="+kakaoID;
