@@ -19,7 +19,7 @@
             android:layout_weight="3"
             android:id = "@+id/detailTitle"
             android:text="Title goes here"
-            android:background="#f06292"
+            android:background="#21B684"
             android:textColor="#FFF"
             android:typeface="monospace"
             android:textSize="20dp"
@@ -104,13 +104,14 @@
                 android:id="@+id/fab"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="80dp"
                 android:layout_gravity="bottom|end"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/roundedbutton"
                 android:text="취소"
+                android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:textSize="10dp" />
+                android:textSize="13dp" />
 
         </LinearLayout>
 

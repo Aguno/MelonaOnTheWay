@@ -35,9 +35,10 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/roundedbutton"
-        android:text="시작점 기준으로"
-        android:textColor="#ffffff"
-        android:textSize="10dp" />
+        android:text="시작점 기준"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="13dp" />
 
 
     <Button
@@ -48,9 +49,10 @@
         android:layout_alignBottom="@+id/starting_point"
         android:layout_alignEnd="@+id/add_request"
         android:background="@drawable/roundedbutton"
-        android:text="도착점 기준으로"
-        android:textColor="#ffffff"
-        android:textSize="10dp" />
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:text="도착점 기준"
+        android:textSize="13dp" />
 
 
     <android.support.constraint.ConstraintLayout

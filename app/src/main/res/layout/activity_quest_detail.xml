@@ -19,7 +19,7 @@
             android:layout_weight="3"
             android:id = "@+id/detailTitle"
             android:text="Title goes here"
-            android:background="#f06292"
+            android:background="#21B684"
             android:textColor="#FFF"
             android:typeface="monospace"
             android:textSize="20dp"
@@ -102,7 +102,7 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:clickable="true"
-            android:backgroundTint="#f06292"
+            android:backgroundTint="#21B684"
             app:srcCompat="@android:drawable/star_big_off" />
 
     </LinearLayout>

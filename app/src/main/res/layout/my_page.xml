@@ -96,8 +96,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="#FFFFFFFF"
-                            android:cacheColorHint="#f06292"
-                            android:divider="#f06292"
+                            android:cacheColorHint="#21B684"
+                            android:divider="#21B684"
                             android:dividerHeight="1dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -137,6 +137,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_alignParentTop="true"
+                            android:background="#FFFFFFFF"
+                            android:divider="#21B684"
+                            android:dividerHeight="1dp"
+                            android:cacheColorHint="#21B684"
                             android:layout_toEndOf="@+id/listView1"
                             android:layout_toRightOf="@+id/listView1"></ListView>
 

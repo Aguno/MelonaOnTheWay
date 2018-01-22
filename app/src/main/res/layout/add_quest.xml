@@ -92,6 +92,8 @@
             android:layout_marginTop="15dp"
             android:text="신청하기"
             android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:background="@drawable/roundedbutton"/>
 
         <Button
@@ -103,6 +105,8 @@
 
             android:text="돌아가기"
             android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="15dp"
             android:background="@drawable/roundedbutton"/>
 
     </LinearLayout>

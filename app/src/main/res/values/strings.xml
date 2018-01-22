@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Melona</string>
-    <string name="kakao_app_key">a08c29d9b46ee4083f0564549ac3fa36</string>
+    <string name="kakao_app_key">JW7jhPOSxvY26UzfUGk6e5hDV5M=</string>
     <string-array name="location_names">
         <item></item>
         <item>북측기숙사</item>

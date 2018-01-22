@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -31,11 +32,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
+
 /**
  * Created by hp on 2016-01-26.
  */
 public class LoginActivity  extends Activity {
 
+    ImageView imageView;
     String kakaoID,kakaoNickname,kakaoProfileThumbnailImageUrl,kakaoProfileImageUrl;
 
     private SessionCallback callback;      //콜백 선언
@@ -51,6 +54,8 @@ public class LoginActivity  extends Activity {
         }
 
         setContentView(R.layout.activity_login);
+        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.cute);
 
         callback = new SessionCallback();                  // 이 두개의 함수 중요함
         Session.getCurrentSession().addCallback(callback);
