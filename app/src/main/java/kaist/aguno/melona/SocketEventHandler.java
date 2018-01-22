@@ -1,8 +1,5 @@
 package kaist.aguno.melona;
 
-import android.app.Activity;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,19 +11,17 @@ import io.socket.emitter.Emitter;
 
 public class SocketEventHandler {
 
-    private Socket socket;
-    private Activity mActivity;
+    private static Socket socket;
+    private static String mKakaoId;
 
-    public SocketEventHandler(Activity activity) {
-        mActivity = activity;
-    }
-
-    public void connectSocket() {
+    public static void connectSocket(String kakaoId) {
         try {
             socket = IO.socket("http://143.248.132.156:8080");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+
+        mKakaoId = kakaoId;
 
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
@@ -39,7 +34,7 @@ public class SocketEventHandler {
         socket.connect();
     }
 
-    public void disconnectSocket() throws SocketNotInitializedException {
+    public static void disconnectSocket() throws SocketNotInitializedException {
         if(socket != null) {
             socket.disconnect();
 
@@ -55,130 +50,91 @@ public class SocketEventHandler {
         }
     }
 
-    private Emitter.Listener onConnect = new Emitter.Listener() {
+    private static Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // Ignore
-                }
-            });
+        public void call(Object... args) {
+            // ignore
         }
     };
 
-    private Emitter.Listener onDisconnect = new Emitter.Listener() {
+    private static Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    Toast.makeText(mActivity, "Disconnected from server", Toast.LENGTH_SHORT).show();
-                }
-            });
+        public void call(Object... args) {
+            // ignore
         }
     };
 
-    private Emitter.Listener onConfirmConnection = new Emitter.Listener() {
+    private static Emitter.Listener onConfirmConnection = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    try {
-                        Toast.makeText(mActivity, data.getString("msg"), Toast.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    JSONObject response = new JSONObject();
-                    // TODO : send user's kakaoId to server
-                    // response.put("kakaoId", <kakaoId> );
-                    socket.emit("verifyKakaoId", response);
-                }
-            });
+        public void call(Object... args) {
+            JSONObject response = new JSONObject();
+            try {
+                response.put("kakaoId", mKakaoId);
+                socket.emit("verifyKakaoId", response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private Emitter.Listener onQuestAccepted = new Emitter.Listener() {
+    private static Emitter.Listener onQuestAccepted = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    try {
-                        String questId = data.getString("questId");
-                        String roomURL = data.getString("roomURL");
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            try {
+                String questId = data.getString("questId");
+                String roomURL = data.getString("roomURL");
 
-                        // TODO : further implementation
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                // TODO : further implementation
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private Emitter.Listener onQuestGaveup = new Emitter.Listener() {
+    private static Emitter.Listener onQuestGaveup = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    try {
-                        String questId = data.getString("questId");
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            try {
+                String questId = data.getString("questId");
 
-                        // TODO : further implementation
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                // TODO : further implementation
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private Emitter.Listener onQuestWithdrawn = new Emitter.Listener() {
+    private static Emitter.Listener onQuestWithdrawn = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    try {
-                        String questId = data.getString("questId");
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            try {
+                String questId = data.getString("questId");
 
-                        // TODO : further implementation
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                // TODO : further implementation
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private Emitter.Listener onQuestCompleted = new Emitter.Listener() {
+    private static Emitter.Listener onQuestCompleted = new Emitter.Listener() {
         @Override
-        public void call(final Object... args) {
-            mActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject data = (JSONObject) args[0];
-                    try {
-                        String questId = data.getString("questId");
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+            try {
+                String questId = data.getString("questId");
 
-                        // TODO : further implementation
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+                // TODO : further implementation
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private class SocketNotInitializedException extends Exception {
+    private static class SocketNotInitializedException extends Exception {
         public SocketNotInitializedException(String msg) {
             super(msg);
         }
