@@ -26,23 +26,11 @@ import java.util.List;
 
 
 public class QuestList extends AppCompatActivity {
-    //QuestAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quest_list);
-
-        /*지도로 옮길 것*/
-        Button btn = (Button) findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(QuestList.this, MyPage.class);
-                startActivity(intent);
-            }
-        });
-
 
 
         Bundle extras = getIntent().getExtras();
@@ -100,6 +88,7 @@ public class QuestList extends AppCompatActivity {
         /** Invoked by the Android system on "doInBackground" is executed completely */
         /** This will be executed in ui thread */
         @Override
+
         protected void onPostExecute(SimpleAdapter adapter) {
 
             /** Getting a reference to listview of main.xml layout file */

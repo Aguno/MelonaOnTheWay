@@ -1,30 +1,35 @@
 package kaist.aguno.melona;
 
+/**
+ * Created by user on 2018-01-22.
+ */
+
+
 import android.app.AlertDialog;
-        import android.content.SharedPreferences;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.TextView;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-        import org.json.JSONObject;
+import org.json.JSONObject;
 
-        import java.io.BufferedReader;
-        import java.io.BufferedWriter;
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.InputStreamReader;
-        import java.io.OutputStream;
-        import java.io.OutputStreamWriter;
-        import java.net.HttpURLConnection;
-        import java.net.MalformedURLException;
-        import java.net.URL;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-public class QuestDetail extends AppCompatActivity {
+public class MyPageDetail extends AppCompatActivity {
 
     TextView title;
     TextView where;
@@ -49,15 +54,15 @@ public class QuestDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quest_detail);
+        setContentView(R.layout.my_page_detail);
 
         /*detail창에서 수락버튼용*/
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Click action
-                builder = new AlertDialog.Builder(QuestDetail.this);
+                builder = new AlertDialog.Builder(MyPageDetail.this);
                 View mView = getLayoutInflater().inflate(R.layout.are_you_sure,null);
                 Button yesButton = mView.findViewById(R.id.yes);
                 Button noButton = mView.findViewById(R.id.no);
@@ -67,7 +72,7 @@ public class QuestDetail extends AppCompatActivity {
                 yesButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        new QuestDetail.putQuest().execute("http://143.248.132.156:8080/api/accept");
+                        new MyPageDetail.putQuest().execute("http://143.248.132.156:8080/api/accept");
                         popup.cancel();
 
                     }

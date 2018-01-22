@@ -39,8 +39,11 @@ public class MainActivity extends AppCompatActivity {
     String starting_humanities,starting_north_dorm, starting_west_dorm,starting_west_gate,starting_creative_building;
     String destination_humanities,destination_north_dorm,destination_west_dorm,destination_west_gate,destination_creative_building;
 
-    //Boolean for sorting choice
+    //Boolean and int for sorting choice
     boolean start=true;
+    //get_type
+    //0: normal, 1: uploaded quest list, 2: accepted quest list
+    int get_type=0;
 
 
 
@@ -72,22 +75,27 @@ public class MainActivity extends AppCompatActivity {
         add_request = (ImageButton) findViewById(R.id.add_request);
 
         //run Sort_starting_point on default\
-        new getQuest(true,"인사동").execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"북측기숙사").execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"서측기숙사").execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"쪽문").execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"창의관").execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"서측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"서측",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
 
 
         sort_starting_point.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
 
-                new getQuest(true,"인사동").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"북측기숙사").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"서측기숙사").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"쪽문").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"창의관").execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"서측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
 
             }
 
@@ -98,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 //Sort by destination
-                new getQuest(false,"인사동").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"북측기숙사").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"서측").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"쪽문").execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"창의관").execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"인사동",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"북측기숙사",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"서측",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"쪽문",0).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"창의관",0).execute("http://143.248.132.156:8080/api/quest");
             }
         });
 
@@ -192,7 +200,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 final Intent intent = new Intent(MainActivity.this, MyPage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                //startActivity(intent);
+                //finish();
+                intent.putExtra("strJSON", destination_creative_building);
                 startActivity(intent);
                 finish();
             }
@@ -204,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
         String location_name = "";
 
-        public getQuest(boolean starting_point, String location)
+        public getQuest(boolean starting_point, String location,int get_type)
         {
             if(starting_point){
                 start=  true;
@@ -230,8 +241,16 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         location_string = "destination";
                     }
-
-                    urls[0] = urls[0]+"?"+location_string+"="+location_name+"&state=1";
+                    if(get_type ==0) {
+                        urls[0] = urls[0] + "?" + location_string + "=" + location_name + "&state=1";
+                    }
+                    //uploaded quest request
+                    else if(get_type==1){
+                        urls[0] = urls[0] + "?state=2&to="+kakaoID;
+                    //accepted quest request
+                    }else{
+                        urls[0] = urls[0] + "?state=2&to="+kakaoID;
+                    }
                     URL url = new URL(urls[0]);//url을 가져온다.
                     con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("GET");
