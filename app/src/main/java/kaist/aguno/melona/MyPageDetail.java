@@ -47,6 +47,8 @@ public class MyPageDetail extends AppCompatActivity {
     String[] tag_array;
     String[] _id_array;
 
+    String kakaoID,kakaNickname,kakaoThumbnail,kakaoProfilePicture;
+
     AlertDialog.Builder builder;
     AlertDialog popup;
     String _id;
@@ -55,6 +57,11 @@ public class MyPageDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_page_detail);
+        SharedPreferences prefs = getSharedPreferences("kakaoID",MODE_PRIVATE);
+        kakaoID = prefs.getString("kakaoID",null);
+        kakaNickname = prefs.getString("kakaoNickname",null);
+        kakaoThumbnail = prefs.getString("kakaoProfileThumbnail",null);
+        kakaoProfilePicture = prefs.getString("kakaoProfilePicture",null);
 
         /*detail창에서 수락버튼용*/
         Button fab = (Button) findViewById(R.id.fab);
@@ -132,7 +139,6 @@ public class MyPageDetail extends AppCompatActivity {
     }
     /*putQuest 함수 - 퀘스트 수락을 서버에 보내기*/
     public class putQuest extends AsyncTask<String, String, String> {
-        String my_kakao_ID;
 
         @Override
         protected String doInBackground(String... urls) {
@@ -141,9 +147,8 @@ public class MyPageDetail extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject();
                 SharedPreferences prefs = getSharedPreferences("kakaoID",MODE_PRIVATE);
                 //my_kakao_ID = prefs.getString("kakaoID",null);
-                my_kakao_ID = "703014046";
                 jsonObject.accumulate("questId", "5a64369289bbe62c2465971a");
-                jsonObject.accumulate("accountId",my_kakao_ID);
+                jsonObject.accumulate("accountId",kakaoID);
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
 

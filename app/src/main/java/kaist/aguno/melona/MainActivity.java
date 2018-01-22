@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
         new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
 
         //Get profile info on default
-        //new getQuest(true,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
         new getQuest(false,"북측기숙사",1,false).execute("http://143.248.132.156:8080/api/quest");
-        //new getQuest(true,"서측기숙사",2,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(true,"서측기숙사",2,true).execute("http://143.248.132.156:8080/api/quest");
 
 
 

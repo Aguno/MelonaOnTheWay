@@ -2,8 +2,10 @@ package kaist.aguno.melona;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -32,15 +35,21 @@ import java.util.List;
  */
 
 public class MyPage extends Activity{
+    String kakaoID,kakaNickname,kakaoThumbnail,kakaoProfilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_page);
+        SharedPreferences prefs = getSharedPreferences("kakaoID",MODE_PRIVATE);
+        kakaoID = prefs.getString("kakaoID",null);
+        kakaNickname = prefs.getString("kakaoNickname",null);
+        kakaoThumbnail = prefs.getString("kakaoProfileThumbnail",null);
+        kakaoProfilePicture = prefs.getString("kakaoProfilePicture",null);
 
         Bundle extras = getIntent().getExtras();
-        String strJson = "{\"quests\": "+extras.getString("strJSON")+"}";
-        //String strJson = "{\"quests\": [{\"tag\":[\"정말\", \"배고파\"],\"_id\":\"5a62ed8a2b2cee0df5c1cdd4\",\"startPoint\":\"창의관\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest1\",\"text\":\"도움이 필요해요!!\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0},{\"tag\":[],\"_id\":\"5a62eda02b2cee0df5c1cdd5\",\"startPoint\":\"인사동\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest2\",\"text\":\"\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0}]}";
+        //String strJson = "{\"quests\": "+extras.getString("strJSON")+"}";
+        String strJson = "{\"quests\": [{\"tag\":[\"정말\", \"배고파\"],\"_id\":\"5a62ed8a2b2cee0df5c1cdd4\",\"startPoint\":\"창의관\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest1\",\"text\":\"도움이 필요해요!!\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0},{\"tag\":[],\"_id\":\"5a62eda02b2cee0df5c1cdd5\",\"startPoint\":\"인사동\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest2\",\"text\":\"\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0}]}";
 
         MyPage.ListViewLoaderTask listViewLoaderTask = new MyPage.ListViewLoaderTask();
 
@@ -52,10 +61,12 @@ public class MyPage extends Activity{
         TextView nickname = (TextView) findViewById(R.id.nickname);
         TextView howmuch = (TextView) findViewById(R.id.how_much);
 
-        String imgURL  = "http://k.kakaocdn.net/dn/bemHHl/btqjxqUnf2z/I5E9xtNzQYK6MMjAzw0rj1/profile_110x110c.jpg";
+        String imgURL  = kakaoProfilePicture;
+        new DownloadImageTask((ImageView) findViewById(R.id.image))
+                .execute(imgURL);
 
         //set all Listview adapter
-        nickname.setText("Hwang");
+        nickname.setText(kakaNickname);
         howmuch.setText("500");
 
 
@@ -64,6 +75,31 @@ public class MyPage extends Activity{
         setDynamicHeight(ListView2);
         new DownLoadImageTask(iv).execute(imgURL);*/
 
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            Bitmap resized = Bitmap.createScaledBitmap(result, 300, 300, true);
+            bmImage.setImageBitmap(resized);
+        }
     }
 
 
