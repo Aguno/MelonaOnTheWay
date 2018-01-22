@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:orientation="vertical"
+    >
+
+    <EditText
+        android:id="@+id/title_editor"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="제목"
+ />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:hint="출발지"
+     />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:hint="도착지"
+     />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Spinner
+            android:id="@+id/start_spinner"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="출발지"
+            />
+
+        <Spinner
+            android:id="@+id/destination_spinner"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="도착지"
+            />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/details_editor"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/start_editor"
+        android:hint="의뢰내용" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <EditText
+            android:id="@+id/price_editor"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:layout_weight="1"
+            android:hint="가격" />
+
+        <EditText
+            android:id="@+id/tags_editor"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="태그"
+    />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+
+        <Button
+            android:id="@+id/ok_editor"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+            android:text="신청하기"
+            android:textColor="#ffffff"
+            android:background="@drawable/roundedbutton"/>
+
+        <Button
+            android:id="@+id/no_editor"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+
+            android:text="돌아가기"
+            android:textColor="#ffffff"
+            android:background="@drawable/roundedbutton"/>
+
+    </LinearLayout>
+
+</LinearLayout>
