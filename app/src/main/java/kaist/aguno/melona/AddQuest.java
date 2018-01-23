@@ -122,7 +122,7 @@ public class AddQuest extends Activity {
                 yesButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        new AddQuest.postAccount().execute("http://143.248.132.156:8080/api/quest");
+                        new AddQuest.postAccount().execute("http://143.248.36.249:8080/api/quest");
                         popup.cancel();
 
                     }

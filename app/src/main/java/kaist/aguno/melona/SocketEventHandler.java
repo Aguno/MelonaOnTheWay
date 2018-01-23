@@ -16,7 +16,7 @@ public class SocketEventHandler {
 
     public static void connectSocket(String kakaoId) {
         try {
-            socket = IO.socket("http://143.248.132.156:8080");
+            socket = IO.socket("http://143.248.36.249:8080");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

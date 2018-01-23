@@ -36,6 +36,7 @@ public class MyPageDetail extends AppCompatActivity {
     TextView text;
     TextView reward;
     TextView tag;
+    TextView state;
     String data;
     String test, test2;
     String[] array;
@@ -79,7 +80,7 @@ public class MyPageDetail extends AppCompatActivity {
                 yesButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        new MyPageDetail.putQuest().execute("http://143.248.132.156:8080/api/withdraw");
+                        new MyPageDetail.putQuest().execute("http://143.248.36.249:8080/api/withdraw");
                         popup.cancel();
 
                     }

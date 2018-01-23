@@ -64,6 +64,7 @@ public class QuestJSONParser {
         String where = "";
         String hashtags = "";
         String questId = "";
+        String state = "";
 
         try {
             title = jQuest.getString("title");
@@ -73,6 +74,7 @@ public class QuestJSONParser {
             reward = "$" + jQuest.getString("coinReward");
             where = startPoint +" -> "+ destination;
             questId= jQuest.getString("_id");
+            state = jQuest.getString("state");
 
             /*해시태그 작업*/
             JSONArray jsonArray = jQuest.getJSONArray("tag");
@@ -80,7 +82,14 @@ public class QuestJSONParser {
             for(int i=0; i < jsonArray.length(); i++){
                 arr[i] = jsonArray.getString(i);
             }
-            hashtags = "#" + String.join("  #", arr);
+            if (!hashtags.equals(""))
+                hashtags = "#" + String.join("  #", arr);
+            else
+                hashtags = "No Hashtag";
+            if(state.equals("2"))
+                state = "매칭됨";
+            else
+                state = "대기중";
 
             quest.put("title", title);
             quest.put("where", where);
@@ -88,6 +97,7 @@ public class QuestJSONParser {
             quest.put("text", text);
             quest.put("tag", hashtags);
             quest.put("_id", questId);
+            quest.put("state", state);
 
         } catch (JSONException e) {
             e.printStackTrace();

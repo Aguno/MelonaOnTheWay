@@ -75,16 +75,16 @@ public class MainActivity extends AppCompatActivity {
 
         //run Sort_starting_point on default\
 
-        new getQuest(false,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"서측",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"인사동",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"북측기숙사",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"서측",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"쪽문",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"창의관",0,true).execute("http://143.248.36.249:8080/api/quest");
 
         //Get profile info on default
-        new getQuest(false,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"북측기숙사",1,false).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(false,"서측기숙사",2,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"인사동",1,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"북측기숙사",1,false).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"서측기숙사",2,true).execute("http://143.248.36.249:8080/api/quest");
 
 
 
@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                new getQuest(true,"인사동",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"북측기숙사",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"서측기숙사",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"쪽문",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"창의관",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"인사동",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(true,"북측기숙사",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(true,"서측기숙사",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(true,"쪽문",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(true,"창의관",0,false).execute("http://143.248.36.249:8080/api/quest");
 
             }
 
@@ -108,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 //Sort by destination
-                new getQuest(false,"인사동",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"북측기숙사",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"서측",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"쪽문",0,false).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"창의관",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"인사동",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(false,"북측기숙사",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(false,"서측",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(false,"쪽문",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(false,"창의관",0,false).execute("http://143.248.36.249:8080/api/quest");
             }
         });
 
@@ -191,9 +191,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 final Intent intent = new Intent(MainActivity.this, AddQuest.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
-                finish();
             }
 
         });
@@ -211,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("uploadedQuestPending",uploaded_quest_pending);
                 intent.putExtra("uploadedQuestMatched",uploaded_quest_matched);
                 startActivity(intent);
-                finish();
             }
 
         });

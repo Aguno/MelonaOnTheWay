@@ -75,7 +75,7 @@ public class QuestDetail extends AppCompatActivity {
                 yesButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view) {
-                        new QuestDetail.putQuest().execute("http://143.248.132.156:8080/api/accept");
+                        new QuestDetail.putQuest().execute("http://143.248.36.249:8080/api/accept");
                         popup.cancel();
 
                     }

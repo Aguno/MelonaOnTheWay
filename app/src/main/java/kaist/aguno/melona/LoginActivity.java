@@ -136,8 +136,8 @@ public class LoginActivity  extends Activity {
                 Logger.d("I recieved nickname",kakaoNickname);
                 Logger.d("User profile string",kakaoProfileImageUrl);
                 //post here
-                //url 143.248.132.156:8080
-                new postAccount().execute("http://143.248.132.156:8080/api/account");
+                //url 143.248.36.249:8080
+                new postAccount().execute("http://143.248.36.249:8080/api/account");
                 redirectSignupActivity(); // 로그인 성공시 MainActivity로
             }
         });

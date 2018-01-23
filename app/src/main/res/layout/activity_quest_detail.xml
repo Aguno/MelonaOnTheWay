@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="here->there"
+                android:textSize="18dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 tools:layout_editor_absoluteX="76dp"
                 tools:layout_editor_absoluteY="408dp" />
@@ -64,6 +65,7 @@
                 android:gravity="right"
                 android:padding="10dp"
                 android:text="$???"
+                android:textSize="18dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 tools:layout_editor_absoluteX="240dp"
                 tools:layout_editor_absoluteY="363dp" />
@@ -87,23 +89,37 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
         </ScrollView>
-        <TextView
-            android:id="@+id/detailHashtag"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="#여기에 #해시태그"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_toEndOf="@+id/detailText" />
+            android:weightSum="3"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/detailHashtag"
+                android:layout_width="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="#여기에 #해시태그"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_toEndOf="@+id/detailText" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:clickable="true"
-            android:backgroundTint="#21B684"
-            app:srcCompat="@android:drawable/star_big_off" />
+
+            <Button
+                android:id="@+id/fab"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundedbutton"
+                android:text="수락"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
