@@ -82,13 +82,6 @@ public class QuestJSONParser {
             }
             hashtags = "#" + String.join("  #", arr);
 
-
-
-
-            String details =  "Title : " + title + "\n" +
-                    "Where : " + where + "\n" +
-                    "Reward : " + reward + "\n";
-
             quest.put("title", title);
             quest.put("where", where);
             quest.put("reward", reward);

@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     String starting_humanities,starting_north_dorm, starting_west_dorm,starting_west_gate,starting_creative_building;
     String destination_humanities,destination_north_dorm,destination_west_dorm,destination_west_gate,destination_creative_building;
     String uploaded_quest_pending,uploaded_quest_matched,accepted_quest;
-
+    boolean start_global=true;
     //Boolean and int for sorting choice
-    boolean start=true;
+
 
 
 
@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
         new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
 
         //Get profile info on default
-        new getQuest(true,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"인사동",1,true).execute("http://143.248.132.156:8080/api/quest");
         new getQuest(false,"북측기숙사",1,false).execute("http://143.248.132.156:8080/api/quest");
-        new getQuest(true,"서측기숙사",2,true).execute("http://143.248.132.156:8080/api/quest");
+        new getQuest(false,"서측기숙사",2,true).execute("http://143.248.132.156:8080/api/quest");
 
 
 
@@ -93,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
-                new getQuest(true,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"북측기숙사",0,true).execute("http://143.248.132.156:8`080/api/quest");
-                new getQuest(true,"서측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(true,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"인사동",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"북측기숙사",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"서측기숙사",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"쪽문",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(true,"창의관",0,false).execute("http://143.248.132.156:8080/api/quest");
 
             }
 
@@ -108,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v){
 
                 //Sort by destination
-                new getQuest(false,"인사동",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"북측기숙사",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"서측",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"쪽문",0,true).execute("http://143.248.132.156:8080/api/quest");
-                new getQuest(false,"창의관",0,true).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"인사동",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"북측기숙사",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"서측",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"쪽문",0,false).execute("http://143.248.132.156:8080/api/quest");
+                new getQuest(false,"창의관",0,false).execute("http://143.248.132.156:8080/api/quest");
             }
         });
 
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent i = new Intent(MainActivity.this,QuestList.class);
-                if(start) {
+                if(start_global) {
                     i.putExtra("strJSON", starting_north_dorm);
                 }
                 else{
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent i = new Intent(MainActivity.this,QuestList.class);
-                if(start) {
+                if(start_global) {
                     i.putExtra("strJSON", starting_west_dorm);
                 }
                 else{
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent i = new Intent(MainActivity.this,QuestList.class);
-                if(start) {
+                if(start_global) {
                     i.putExtra("strJSON", starting_west_gate);
                 }
                 else{
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent i = new Intent(MainActivity.this,QuestList.class);
-                if(start) {
+                if(start_global) {
                     i.putExtra("strJSON", starting_humanities);
                 }
                 else{
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent i = new Intent(MainActivity.this,QuestList.class);
-                if(start) {
+                if(start_global) {
                     i.putExtra("strJSON", starting_creative_building);
                 }
                 else{
@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         //get_type
         //0: normal, 1: uploaded quest list, 2: accepted quest list
         int get_type=0;
+        boolean start=true;
 
         public getQuest(boolean starting_point, String location,int get_type_input,boolean matched_input)
         {
@@ -329,6 +330,7 @@ public class MainActivity extends AppCompatActivity {
             try{
                 if(get_type ==0) {
                     if (start) {
+                        start_global=true;
                         if (location_name == "북측기숙사") {
                             starting_north_dorm = result;
                             north_dorm.setText(Integer.toString(new JSONArray(starting_north_dorm).length()));
@@ -346,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
                             creative_building.setText(Integer.toString(new JSONArray(starting_creative_building).length()));
                         }
                     } else {
+                        start_global = false;
                         if (location_name == "북측기숙사") {
                             destination_north_dorm = result;
                             north_dorm.setText(Integer.toString(new JSONArray(destination_north_dorm).length()));

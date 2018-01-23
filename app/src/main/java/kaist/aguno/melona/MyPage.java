@@ -48,13 +48,18 @@ public class MyPage extends Activity{
         kakaoProfilePicture = prefs.getString("kakaoProfilePicture",null);
 
         Bundle extras = getIntent().getExtras();
-        //String strJson = "{\"quests\": "+extras.getString("strJSON")+"}";
-        String strJson = "{\"quests\": [{\"tag\":[\"정말\", \"배고파\"],\"_id\":\"5a62ed8a2b2cee0df5c1cdd4\",\"startPoint\":\"창의관\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest1\",\"text\":\"도움이 필요해요!!\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0},{\"tag\":[],\"_id\":\"5a62eda02b2cee0df5c1cdd5\",\"startPoint\":\"인사동\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest2\",\"text\":\"\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0}]}";
+        String strJson = "{\"quests\": "+extras.getString("uploadedQuestPending")+"}";
+        String strJson2 = "{\"quests\": "+extras.getString("accepted")+"}";
+        Log.d("msg", strJson);
+
+        //String strJson = "{\"quests\": [{\"tag\":[\"정말\", \"배고파\"],\"_id\":\"5a62ed8a2b2cee0df5c1cdd4\",\"startPoint\":\"창의관\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest1\",\"text\":\"도움이 필요해요!!\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0},{\"tag\":[],\"_id\":\"5a62eda02b2cee0df5c1cdd5\",\"startPoint\":\"인사동\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest2\",\"text\":\"\",\"state\":1,\"from\":\"kakao1\",\"to\":\"\",\"__v\":0}]}";
 
         MyPage.ListViewLoaderTask listViewLoaderTask = new MyPage.ListViewLoaderTask();
+        MyPage.ListViewLoaderTask2 listViewLoaderTask2 = new MyPage.ListViewLoaderTask2();
 
         /** Start parsing xml data */
         listViewLoaderTask.execute(strJson);
+        listViewLoaderTask2.execute(strJson2);
 
         //locate Views
         ImageView iv = (ImageView) findViewById(R.id.image);
@@ -134,7 +139,7 @@ public class MyPage extends Activity{
             }
 
             /** Keys used in Hashmap */
-            String[] from = { "title","where", "reward",};
+            String[] from = { "title","where", "reward"};
 
             /** Ids of views in listview_layout */
             int[] to = { R.id.title,R.id.where, R.id.reward};
@@ -154,7 +159,6 @@ public class MyPage extends Activity{
 
             /** Getting a reference to listview of main.xml layout file */
             final ListView listView1 = ( ListView ) findViewById(R.id.listView1);
-
             listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -163,12 +167,56 @@ public class MyPage extends Activity{
                     startActivity(intent);
                 }
             });
-
-            /** Setting the adapter containing the country list to listview */
             listView1.setAdapter(adapter);
+        }
+    }
+
+    private class ListViewLoaderTask2 extends AsyncTask<String, Void, SimpleAdapter> {
+
+        JSONObject jObject2;
+        /** Doing the parsing of xml data in a non-ui thread */
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected SimpleAdapter doInBackground(String... strJson) {
+            try{
+                jObject2 = new JSONObject(strJson[0]);
+                QuestJSONParser questJsonParser = new QuestJSONParser();
+                questJsonParser.parse(jObject2);
+            }catch(Exception e){
+                Log.d("JSON Exception1",e.toString());
+            }
+
+            QuestJSONParser questJsonParser = new QuestJSONParser();
+
+            List<HashMap<String, String>> quests = null;
+
+            try{
+                /** Getting the parsed data as a List construct */
+                quests = questJsonParser.parse(jObject2);
+            }catch(Exception e){
+                Log.d("Exception",e.toString());
+            }
+
+            /** Keys used in Hashmap */
+            String[] from = { "title","where", "reward"};
+
+            /** Ids of views in listview_layout */
+            int[] to = { R.id.title,R.id.where, R.id.reward};
+
+            /** Instantiating an adapter to store each items
+             *  R.layout.listview_layout defines the layout of each item
+             */
+            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), quests, R.layout.my_page_item2, from, to);
+
+            return adapter;
+        }
+
+        /** Invoked by the Android system on "doInBackground" is executed completely */
+        /** This will be executed in ui thread */
+        @Override
+        protected void onPostExecute(SimpleAdapter adapter) {
 
             final ListView listView2 = ( ListView ) findViewById(R.id.listView2);
-
             listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -177,11 +225,11 @@ public class MyPage extends Activity{
                     startActivity(intent);
                 }
             });
-
-            /** Setting the adapter containing the country list to listview */
             listView2.setAdapter(adapter);
         }
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_page, menu);
