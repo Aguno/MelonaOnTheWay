@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         new getQuest(false,"인사동",0,true).execute("http://143.248.36.249:8080/api/quest");
         new getQuest(false,"북측기숙사",0,true).execute("http://143.248.36.249:8080/api/quest");
-        new getQuest(false,"서측",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"서측기숙사",0,true).execute("http://143.248.36.249:8080/api/quest");
         new getQuest(false,"쪽문",0,true).execute("http://143.248.36.249:8080/api/quest");
         new getQuest(false,"창의관",0,true).execute("http://143.248.36.249:8080/api/quest");
 
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 //Sort by destination
                 new getQuest(false,"인사동",0,false).execute("http://143.248.36.249:8080/api/quest");
                 new getQuest(false,"북측기숙사",0,false).execute("http://143.248.36.249:8080/api/quest");
-                new getQuest(false,"서측",0,false).execute("http://143.248.36.249:8080/api/quest");
+                new getQuest(false,"서측기숙사",0,false).execute("http://143.248.36.249:8080/api/quest");
                 new getQuest(false,"쪽문",0,false).execute("http://143.248.36.249:8080/api/quest");
                 new getQuest(false,"창의관",0,false).execute("http://143.248.36.249:8080/api/quest");
             }

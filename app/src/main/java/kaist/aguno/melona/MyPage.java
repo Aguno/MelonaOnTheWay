@@ -52,10 +52,21 @@ public class MyPage extends Activity{
 
         Bundle extras = getIntent().getExtras();
         String strJson = "{\"quests\": "+extras.getString("acceptedQuest")+"}";
-        String strJson2 = "{\"quests\": "+extras.getString("uploadedQuestPending");
-        String strJson3 = extras.getString("uploadedQuestMatched")+"}";
-        strJson2 = strJson2.substring(0,strJson2.length()-1);
-        strJson3 = strJson3.substring(1);
+        String strJson2 = extras.getString("uploadedQuestPending");
+        String strJson3 = extras.getString("uploadedQuestMatched");
+
+        if (!strJson2.equals("[]")&&!strJson3.equals("[]")){
+            strJson2 = strJson2.substring(0,strJson2.length()-1);
+            strJson3 = strJson3.substring(1);
+            strJson2 =  "{\"quests\": " + strJson2 + ","+ strJson3  + "}";
+        }
+        else {
+            strJson2 = strJson2.substring(0, strJson2.length() - 1);
+            strJson3 = strJson3.substring(1);
+            strJson2 = "{\"quests\": " + strJson2 + strJson3 + "}";
+        }
+
+
         Log.d("msg", strJson);
         Log.d("msg", strJson2+strJson3);
         //String strJson = "{\"quests\": [{\"tag\":[\"정말\", \"배고파\"],\"_id\":\"5a62ed8a2b2cee0df5c1cdd4\",\"startPoint\":\"창의관\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest1\",\"text\":\"도움이 필요해요!!\",\"state\":2,\"from\":\"kakao1\",\"to\":\"703014046\",\"__v\":0},{\"tag\":[],\"_id\":\"5a62eda02b2cee0df5c1cdd5\",\"startPoint\":\"인사동\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"quest2\",\"text\":\"\",\"state\":2,\"from\":\"kakao1\",\"to\":\"703014046\",\"__v\":0}]}";
@@ -63,10 +74,6 @@ public class MyPage extends Activity{
         //String strJson3 = ",{\"tag\":[],\"_id\":\"5a62eda02b2cee0df5c1cdd5\",\"startPoint\":\"인사동\",\"destination\":\"undefined\",\"coinReward\":0,\"expReward\":0,\"title\":\"matched\",\"text\":\"\",\"state\":2,\"from\":\"703014046\",\"to\":\"123\",\"__v\":0}]}";
 
 
-
-
-
-        strJson2 = strJson2+","+ strJson3;
         /** Start parsing xml data */
         if (!strJson.equals("{\"quests\": []}")){
             MyPage.ListViewLoaderTask2 listViewLoaderTask2 = new MyPage.ListViewLoaderTask2();

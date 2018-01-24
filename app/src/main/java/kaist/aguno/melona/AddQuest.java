@@ -51,7 +51,7 @@ public class AddQuest extends Activity {
     String title,starting_point,destination,details;
     int price;
     String my_kakao_ID;
-    List<String> tags;
+    String tags;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +108,14 @@ public class AddQuest extends Activity {
                 //starting_point = starting_point_editor.getText().toString();
                 //destination= destination_editor.getText().toString();
                 details = details_editor.getText().toString();
-                price = Integer.parseInt(price_editor.getText().toString());
-                tags = Arrays.asList(tags_editor.getText().toString().split("\\s*,\\s*"));
+                String check = price_editor.getText().toString();
+                if(check.equals("")){
+                    price = 0;
+                }
+                else {
+                    price = Integer.parseInt(price_editor.getText().toString());
+                }
+                tags = tags_editor.getText().toString();
 
                 builder = new AlertDialog.Builder(AddQuest.this);
                 View mView = getLayoutInflater().inflate(R.layout.request_quest_alert,null);

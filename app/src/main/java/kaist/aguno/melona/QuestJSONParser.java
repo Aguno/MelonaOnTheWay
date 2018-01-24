@@ -3,6 +3,7 @@ package kaist.aguno.melona;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,14 +79,27 @@ public class QuestJSONParser {
 
             /*해시태그 작업*/
             JSONArray jsonArray = jQuest.getJSONArray("tag");
+            /*
             String[] arr = new String[jsonArray.length()];
             for(int i=0; i < jsonArray.length(); i++){
                 arr[i] = jsonArray.getString(i);
             }
-            if (!hashtags.equals(""))
-                hashtags = "#" + String.join("  #", arr);
-            else
-                hashtags = "No Hashtag";
+            */
+            if (jsonArray.length()!=0){
+                hashtags = jsonArray.get(0).toString();
+                if (hashtags.equals("")) {
+                    hashtags = "No Hashtag";
+                } else {
+                    String[] arr = hashtags.split(",");
+
+                    hashtags = "#" + String.join("  #", arr);
+                }
+            }
+
+
+
+
+
             if(state.equals("2"))
                 state = "매칭됨";
             else
