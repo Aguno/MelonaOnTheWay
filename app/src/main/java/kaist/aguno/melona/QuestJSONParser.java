@@ -3,6 +3,7 @@ package kaist.aguno.melona;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class QuestJSONParser {
                 } else {
                     String[] arr = hashtags.split(",");
 
-                    hashtags = "#" + String.join("  #", arr);
+                    hashtags = "#" + TextUtils.join("  #", arr);
                 }
             }
 
