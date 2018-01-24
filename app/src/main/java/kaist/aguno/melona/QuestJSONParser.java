@@ -97,9 +97,6 @@ public class QuestJSONParser {
             }
 
 
-
-
-
             if(state.equals("2"))
                 state = "매칭됨";
             else
