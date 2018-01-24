@@ -107,15 +107,16 @@ public class QuestDetail extends AppCompatActivity {
         if(bundle!=null){
             data = bundle.getString("toDetail");
             array = data.split(", ");
-            test = array[0];
-            reward_array=test.split("=");
-            reward.setText(reward_array[1]);
+
+            test = array[5];
+            title_array=test.split("=");
+            title.setText(title_array[1]);
 
             test = array[1];
             where_array=test.split("=");
             where.setText(where_array[1]);
 
-            test = array[2];
+            test = array[0];
             text_array= test.split("=");
             if(text_array.length==1)
                 text.setText("퀘스트 설명이 없습니다.");
@@ -124,16 +125,17 @@ public class QuestDetail extends AppCompatActivity {
             }
 
             test = array[6];
-            title_array=test.split("=");
-            test2 = title_array[1];
+            reward_array=test.split("=");
+            test2 = reward_array[1];
             title_array2 = test2.split("\\}");
-            title.setText(title_array2[0]);
+            reward.setText(title_array2[0]);
 
-            test = array[3];
+
+            test = array[4];
             tag_array=test.split("=");
             tag.setText(tag_array[1]);
 
-            test = array[4];
+            test = array[3];
             _id_array = test.split("=");
             _id = _id_array[1];
 
