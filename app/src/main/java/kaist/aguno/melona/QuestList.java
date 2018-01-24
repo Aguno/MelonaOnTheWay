@@ -100,6 +100,7 @@ public class QuestList extends AppCompatActivity {
                     Intent intent = new Intent(QuestList.this, QuestDetail.class);
                     intent.putExtra("toDetail", listView.getItemAtPosition(i).toString());
                     startActivity(intent);
+                    finish();
                 }
             });
 

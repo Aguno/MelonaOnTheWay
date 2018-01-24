@@ -16,11 +16,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     //Buttons
     Button west_dorm,west_gate,north_dorm,creative_building,humanities;
     Button sort_starting_point, sort_destinationi;
+    Button report;
     ImageButton toMinas;
     ImageButton add_request;
     //Kakao ID
@@ -41,15 +46,57 @@ public class MainActivity extends AppCompatActivity {
     String uploaded_quest_pending,uploaded_quest_matched,accepted_quest;
     boolean start_global=true;
     //Boolean and int for sorting choice
+    int coin_left;
 
+    private static boolean activityVisible;
+    public static boolean isActivityVisible() {
+        return activityVisible;
+    }
+    private static void setActivityVisible(boolean activityVisible) {
+        MainActivity.activityVisible = activityVisible;
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("check for kakao ID in main activity",kakaoID);
 
+        setActivityVisible(true);
 
+        //run Sort_starting_point on default\
+
+        new getQuest(false,"인사동",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"북측기숙사",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"서측",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"쪽문",0,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"창의관",0,true).execute("http://143.248.36.249:8080/api/quest");
+
+        //Get profile info on default
+        new getQuest(false,"인사동",1,true).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"북측기숙사",1,false).execute("http://143.248.36.249:8080/api/quest");
+        new getQuest(false,"서측기숙사",2,true).execute("http://143.248.36.249:8080/api/quest");
+
+        new getCoin().execute("http://143.248.36.249:8080/api/account/kakaoId/"+kakaoID);
+
+        while(!SocketEventHandler.msgQueue.isEmpty()) {
+            MessageQueue.Message msg = SocketEventHandler.msgQueue.popMessage();
+            SocketEventHandler.createAcceptPopUp(this, msg.questId, msg.roomURL);
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("paused", "paused");
+        setActivityVisible(false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setActivityVisible(true);
         //get Kaokao ID from Shared Preferences
         SharedPreferences prefs = getSharedPreferences("kakaoID",MODE_PRIVATE);
         kakaoID = prefs.getString("kakaoID",null);
@@ -65,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         humanities = (Button) findViewById(R.id.humanities);
         //Test Minas
         toMinas = (ImageButton)findViewById(R.id.toMinas);
+        report = (Button) findViewById(R.id.report);
 
         //Button for sorting
         sort_starting_point = (Button) findViewById(R.id.starting_point);
@@ -85,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
         new getQuest(false,"인사동",1,true).execute("http://143.248.36.249:8080/api/quest");
         new getQuest(false,"북측기숙사",1,false).execute("http://143.248.36.249:8080/api/quest");
         new getQuest(false,"서측기숙사",2,true).execute("http://143.248.36.249:8080/api/quest");
+
+        new getCoin().execute("http://143.248.36.249:8080/api/account/kakaoId/"+kakaoID);
+        //new giveUp("5a67405dd7f9b62a1811ca91").execute("http://143.248.36.249:8080/api/giveup");
 
 
 
@@ -208,10 +259,35 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("acceptedQuest",accepted_quest);
                 intent.putExtra("uploadedQuestPending",uploaded_quest_pending);
                 intent.putExtra("uploadedQuestMatched",uploaded_quest_matched);
+                intent.putExtra("coin_left",coin_left);
                 startActivity(intent);
             }
 
         });
+
+        report.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                final Intent intent = new Intent(MainActivity.this, Report.class);
+                startActivity(intent);
+            }
+
+        });
+
+        // Socket handling
+        SocketEventHandler.connectSocket(kakaoID, MainActivity.this);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            SocketEventHandler.disconnectSocket();
+            Log.e("disconnect", "disconnected");
+        } catch (SocketEventHandler.SocketNotInitializedException e) {
+            e.printStackTrace();
+        }
     }
 
     public class getQuest extends AsyncTask<String, String, String> {
@@ -389,4 +465,87 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public class getCoin extends AsyncTask<String, String, String> {
+
+        int coin;
+
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+                String location_string;
+                try {
+                    urls[0] = urls[0];
+                    URL url = new URL(urls[0]);//url을 가져온다.
+                    con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    con.connect();//연결 수행
+
+                    //입력 스트림 생성
+                    InputStream stream = con.getInputStream();
+
+                    //속도를 향상시키고 부하를 줄이기 위한 버퍼를 선언한다.
+                    reader = new BufferedReader(new InputStreamReader(stream));
+
+                    //실제 데이터를 받는곳
+                    StringBuffer buffer = new StringBuffer();
+
+                    //line별 스트링을 받기 위한 temp 변수
+                    String line = "";
+
+                    //아래라인은 실제 reader에서 데이터를 가져오는 부분이다. 즉 node.js서버로부터 데이터를 가져온다.
+                    while ((line = reader.readLine()) != null) {
+                        buffer.append(line);
+                    }
+
+                    //다 가져오면 String 형변환을 수행한다. 이유는 protected String doInBackground(String... urls) 니까
+                    return buffer.toString();
+
+                    //아래는 예외처리 부분이다.
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    //종료가 되면 disconnect메소드를 호출한다.
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        //버퍼를 닫아준다.
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }//finally 부분
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        //doInBackground메소드가 끝나면 여기로 와서 텍스트뷰의 값을 바꿔준다.
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            try {
+                JSONObject accountJSON = new JSONObject(result);
+                coin = accountJSON.getInt("coin");
+                coin_left = coin;
+                Log.e("coin value got?", coin + "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+//필요한데 쓰세요
 }

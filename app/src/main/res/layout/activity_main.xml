@@ -172,5 +172,16 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <Button
+        android:id="@+id/report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/add_request"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/roundedbutton"
+        android:text="신고하기" />
+
 
 </RelativeLayout>

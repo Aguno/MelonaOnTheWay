@@ -124,6 +124,7 @@ public class AddQuest extends Activity {
                     public void onClick(View view) {
                         new AddQuest.postAccount().execute("http://143.248.36.249:8080/api/quest");
                         popup.cancel();
+                        finish();
 
                     }
                 });

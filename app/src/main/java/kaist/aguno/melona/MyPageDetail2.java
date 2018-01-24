@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MyPageDetail extends AppCompatActivity {
+public class MyPageDetail2 extends AppCompatActivity {
 
     TextView title;
     TextView where;
@@ -107,14 +106,14 @@ public class MyPageDetail extends AppCompatActivity {
             _id = _id_array[1];
         }
 
-        /*detail창에서 철회버튼용*/
+        /*detail창에서 포기버튼용*/
         Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Click action
-                builder = new AlertDialog.Builder(MyPageDetail.this);
-                View mView = getLayoutInflater().inflate(R.layout.withdraw_quest_alert,null);
+                builder = new AlertDialog.Builder(MyPageDetail2.this);
+                View mView = getLayoutInflater().inflate(R.layout.giveup_quest_alert,null);
                 Button yesButton = mView.findViewById(R.id.yes);
                 Button noButton = mView.findViewById(R.id.no);
                 builder.setView(mView);
@@ -124,33 +123,7 @@ public class MyPageDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         // new MyPageDetail.putQuest().execute("http://143.248.36.249:8080/api/withdraw");
-                        new giveUp(_id).execute("http://143.248.36.249:8080/api/withdraw");
-                        popup.cancel();
-                        finish();
-
-                    }
-                });
-
-            }
-        });
-         /*detail창에서 완료버튼용*/
-        Button fab2 = (Button) findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Click action
-                builder = new AlertDialog.Builder(MyPageDetail.this);
-                View mView = getLayoutInflater().inflate(R.layout.complete_quest_alert,null);
-                Button yesButton = mView.findViewById(R.id.yes);
-                Button noButton = mView.findViewById(R.id.no);
-                builder.setView(mView);
-                popup = builder.create();
-                popup.show();
-                yesButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        // new MyPageDetail.putQuest().execute("http://143.248.36.249:8080/api/withdraw");
-                        new giveUp(_id).execute("http://143.248.36.249:8080/api/complete");
+                        new giveUp(_id).execute("http://143.248.36.249:8080/api/giveup");
                         popup.cancel();
                         finish();
 
@@ -165,8 +138,38 @@ public class MyPageDetail extends AppCompatActivity {
 
             }
         });
+         /*detail창에서 완료버튼용*/
+        Button fab2 = (Button) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Click action
+                builder = new AlertDialog.Builder(MyPageDetail2.this);
+                View mView = getLayoutInflater().inflate(R.layout.get_reward_quest_alert,null);
+                Button yesButton = mView.findViewById(R.id.yes);
+                Button noButton = mView.findViewById(R.id.no);
+                builder.setView(mView);
+                popup = builder.create();
+                popup.show();
+                yesButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        // new MyPageDetail.putQuest().execute("http://143.248.36.249:8080/api/withdraw");
+                        new MyPageDetail2.giveUp(_id).execute("http://143.248.36.249:8080/api/reward");
+                        popup.cancel();
+                        finish();
 
+                    }
+                });
+                noButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        popup.cancel();
+                    }
+                });
 
+            }
+        });
     }
     /*putQuest 함수 - 퀘스트 수락을 서버에 보내기*/
     public class putQuest extends AsyncTask<String, String, String> {

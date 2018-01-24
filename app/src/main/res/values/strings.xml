@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Melona</string>
     <string name="kakao_app_key">a08c29d9b46ee4083f0564549ac3fa36</string>
+    <string name="dialog_title">매칭 됨</string>
+    <string name = "dialog_action_dismiss">취소</string>
+    <string name = "dialog_message">채팅창으로 이동합니다</string>
+    <string name = "about_body">내용이 들어감</string>
+
     <string-array name="location_names">
         <item></item>
         <item>북측기숙사</item>
